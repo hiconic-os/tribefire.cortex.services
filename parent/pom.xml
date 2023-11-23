@@ -28,7 +28,7 @@ You should have received a copy of the GNU Lesser General Public License along w
 
 		<V.tribefire.extension.js>[3.0,3.1)</V.tribefire.extension.js>
 
-		<V.javax.servlet>3.0.1</V.javax.servlet>
+		<V.javax.servlet>3.1.0</V.javax.servlet>
 		<V.javax.websocket>1.1</V.javax.websocket>
 		<V.org.apache.httpcomponents>4.5.3</V.org.apache.httpcomponents>
 		<V.com.googlecode.junit-toolbox>2.4</V.com.googlecode.junit-toolbox>
