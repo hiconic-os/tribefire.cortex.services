@@ -19,6 +19,7 @@ import com.braintribe.logging.Logger;
 import com.braintribe.logging.listener.LoggingRuntimeListener;
 import com.braintribe.model.processing.bootstrapping.TribefireRuntime;
 import com.braintribe.model.processing.tfconstants.TribefireConstants;
+import com.braintribe.util.network.NetworkTools;
 import com.braintribe.utils.FileTools;
 import com.braintribe.utils.RandomTools;
 import com.braintribe.utils.StringTools;
@@ -31,7 +32,6 @@ import com.braintribe.wire.api.context.WireContext;
 import tribefire.platform.impl.PreLoader;
 import tribefire.platform.wire.TribefirePlatformWireModule;
 import tribefire.platform.wire.contract.MainTribefireContract;
-
 
 public class TribefireWebApp extends WebApp {
 
@@ -46,14 +46,15 @@ public class TribefireWebApp extends WebApp {
 
 		logger.pushContext(info + "#initialize");
 
-		logger.info("Initializing " + info);
+		logger.info(() -> "Initializing " + info);
 
 		try {
 			publishServletContext(contextEvent.getServletContext());
 
 			ensureTmpDir();
 			ensureNodeUuid();
-			
+			triggerIpDetection();
+
 			// info.getContextPath() is deprecated. tribefire-services should always be addressed as "master"
 			TribefireRuntime.registerMbean(TribefireConstants.TRIBEFIRE_SERVICES_APPLICATION_ID, info.getContextPath());
 
@@ -69,13 +70,18 @@ public class TribefireWebApp extends WebApp {
 
 			super.contextInitialized(contextEvent);
 
-			logger.info("Initialized " + info);
+			logger.info(() -> "Initialized " + info);
 
 		} finally {
 			TribefireRuntime.leaveStartup();
 			logger.popContext();
-			TribefireRuntime.setProperty(TribefireRuntime.ENVIRONMENT_INITIALIZATION_COMPLETED, ""+System.currentTimeMillis());
+			TribefireRuntime.setProperty(TribefireRuntime.ENVIRONMENT_INITIALIZATION_COMPLETED, "" + System.currentTimeMillis());
 		}
+	}
+
+	private void triggerIpDetection() {
+		Thread.ofVirtual().start(() -> NetworkTools.getNetworkAddress());
+
 	}
 
 	private void ensureTmpDir() {
@@ -83,8 +89,8 @@ public class TribefireWebApp extends WebApp {
 		if (!StringTools.isBlank(tmpDir)) {
 			try {
 				FileTools.createDirectory(tmpDir);
-			} catch(Exception e) {
-				logger.warn("Error while trying to ensure tmp directory: "+tmpDir, e);
+			} catch (Exception e) {
+				logger.warn("Error while trying to ensure tmp directory: " + tmpDir, e);
 			}
 		}
 	}
@@ -99,7 +105,7 @@ public class TribefireWebApp extends WebApp {
 		if (wireContext == null)
 			throw new IllegalStateException("Wire context is not initialized");
 
-		// We need to load modules first, only then access the web registry 
+		// We need to load modules first, only then access the web registry
 		MainTribefireContract platformContract = wireContext.contract();
 
 		platformContract.activate();
@@ -112,7 +118,7 @@ public class TribefireWebApp extends WebApp {
 
 		wireContext = Wire.context(TribefirePlatformWireModule.INSTANCE);
 
-		logger.info("Wire context initialization for "+info+" has finished in "+(System.currentTimeMillis()-start)+" ms");
+		logger.info("Wire context initialization for " + info + " has finished in " + (System.currentTimeMillis() - start) + " ms");
 	}
 
 	@Override
@@ -131,7 +137,9 @@ public class TribefireWebApp extends WebApp {
 			try {
 				super.contextDestroyed(contextEvent);
 			} catch (Exception e) {
-				logger.error(super.getClass().getName() + ".contextDestroyed() failed for " + info + (e.getMessage() != null ? ": " + e.getMessage() : ""), e);
+				logger.error(
+						super.getClass().getName() + ".contextDestroyed() failed for " + info + (e.getMessage() != null ? ": " + e.getMessage() : ""),
+						e);
 			}
 
 			shutdownWireContext(info);
@@ -153,10 +161,10 @@ public class TribefireWebApp extends WebApp {
 			try {
 				wireContext.shutdown();
 			} catch (Exception e) {
-				logger.error("Failed to shutdown wire context for "+info+(e.getMessage() != null ? ": "+e.getMessage() : ""), e);
+				logger.error("Failed to shutdown wire context for " + info + (e.getMessage() != null ? ": " + e.getMessage() : ""), e);
 			}
 		} else {
-			logger.warn(info+" wire context cannot be shut down as it was not initialized.");
+			logger.warn(info + " wire context cannot be shut down as it was not initialized.");
 		}
 	}
 
@@ -170,6 +178,5 @@ public class TribefireWebApp extends WebApp {
 			logger.error("Failed to execute configurators: " + e.getMessage(), e);
 		}
 	}
-
 
 }
