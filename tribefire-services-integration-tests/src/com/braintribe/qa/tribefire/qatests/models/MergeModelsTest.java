@@ -20,7 +20,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.braintribe.model.cortexapi.model.AddDependencies;
-import com.braintribe.model.generic.reflection.SimpleType;
+import com.braintribe.model.generic.reflection.SimpleTypes;
 import com.braintribe.model.meta.GmMetaModel;
 import com.braintribe.product.rat.imp.ImpApi;
 import com.braintribe.product.rat.imp.ImpApiFactory;
@@ -50,8 +50,8 @@ public class MergeModelsTest {
 		// @formatter:off
 		imp.model().entityType()
 					.create(GROUP_ID, PREFIX + "TestType1", firstModel)
-						.addProperty(PREFIX + "testProperty1", SimpleType.TYPE_INTEGER)
-						.addProperty(PREFIX + "testProperty11", SimpleType.TYPE_BOOLEAN);
+						.addProperty(PREFIX + "testProperty1", SimpleTypes.TYPE_INTEGER)
+						.addProperty(PREFIX + "testProperty11", SimpleTypes.TYPE_BOOLEAN);
 
 		imp.model().enumType()
 					.create(GROUP_ID, PREFIX + "TestType2", secondModel)
@@ -132,7 +132,7 @@ public class MergeModelsTest {
 
 			imp.model().entityType()
 					.create(GROUP_ID, PREFIX + "DummyEntity" + i, dummyModel)
-					.addProperty("dummyProp" + i, SimpleType.TYPE_BOOLEAN);
+					.addProperty("dummyProp" + i, SimpleTypes.TYPE_BOOLEAN);
 			// @formatter:on
 
 			names[i + 1] = DUMMY_MODEL_BASENAME + i;

@@ -19,7 +19,7 @@ import org.junit.Before;
 import com.braintribe.model.accessdeployment.smood.CollaborativeSmoodAccess;
 import com.braintribe.model.extensiondeployment.StateChangeProcessor;
 import com.braintribe.model.extensiondeployment.meta.OnChange;
-import com.braintribe.model.generic.reflection.SimpleType;
+import com.braintribe.model.generic.reflection.SimpleTypes;
 import com.braintribe.model.generic.session.exception.GmSessionException;
 import com.braintribe.model.meta.GmMetaModel;
 import com.braintribe.model.processing.session.api.persistence.PersistenceGmSession;
@@ -56,8 +56,8 @@ public class StateChangeProcessorTest extends AbstractTribefireQaTest {
 		imp.model()
 			.entityType()
 				.create(Invoice.T, currentModel)
-				.addProperty(Invoice.invoiceState, SimpleType.TYPE_STRING)
-				.addProperty(Invoice.total,	SimpleType.TYPE_DOUBLE);
+				.addProperty(Invoice.invoiceState, SimpleTypes.TYPE_STRING)
+				.addProperty(Invoice.total,	SimpleTypes.TYPE_DOUBLE);
 		// @formatter:on
 
 		imp.commit();

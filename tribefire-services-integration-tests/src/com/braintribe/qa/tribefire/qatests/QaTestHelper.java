@@ -12,7 +12,7 @@
 package com.braintribe.qa.tribefire.qatests;
 
 import com.braintribe.model.accessdeployment.smood.CollaborativeSmoodAccess;
-import com.braintribe.model.generic.reflection.SimpleType;
+import com.braintribe.model.generic.reflection.SimpleTypes;
 import com.braintribe.model.meta.GmEnumType;
 import com.braintribe.model.meta.GmMetaModel;
 import com.braintribe.model.resource.Resource;
@@ -53,8 +53,8 @@ public class QaTestHelper {
 
 		imp.model().entityType()
 	  				.with(Parent.T)
-						.addProperty(Parent.name, SimpleType.TYPE_STRING)
-						.addProperty(Parent.lastname, SimpleType.TYPE_STRING)
+						.addProperty(Parent.name, SimpleTypes.TYPE_STRING)
+						.addProperty(Parent.lastname, SimpleTypes.TYPE_STRING)
 						.addSetProperty(Parent.children, Child.T)
 						.addSetProperty(Parent.parents, Parent.T);
 		imp.model().entityType().with(Father.T)
@@ -64,14 +64,14 @@ public class QaTestHelper {
 						.addProperty(Mother.husband, Father.T)
 						.addInheritance(Parent.T);
 		imp.model().entityType().with(Child.T)
-						.addProperty(Child.name, SimpleType.TYPE_STRING)
+						.addProperty(Child.name, SimpleTypes.TYPE_STRING)
 						.addListProperty(Child.tasks, Task.T)
 						.addProperty(Child.logo, Resource.T);
 		imp.model().entityType().with(Invoice.T)
-						.addProperty(Invoice.invoiceState, SimpleType.TYPE_STRING)
-						.addProperty(Invoice.total, SimpleType.TYPE_DOUBLE);
+						.addProperty(Invoice.invoiceState, SimpleTypes.TYPE_STRING)
+						.addProperty(Invoice.total, SimpleTypes.TYPE_DOUBLE);
 		imp.model().entityType().with(Task.T)
-						.addProperty(Task.name, SimpleType.TYPE_STRING)
+						.addProperty(Task.name, SimpleTypes.TYPE_STRING)
 						.addProperty(Task.state, taskStateType);
 		imp.commit();
 		// @formatter:on
