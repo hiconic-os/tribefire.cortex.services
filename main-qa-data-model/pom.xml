@@ -22,7 +22,6 @@ limitations under the License.
     <artifactId>main-qa-data-model</artifactId>
     <version>3.0.14</version>
     <properties>
-        <model-revision>1</model-revision>
         <archetype>model</archetype>
     </properties>
     <licenses>
