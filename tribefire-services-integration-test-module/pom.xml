@@ -39,7 +39,7 @@ limitations under the License.
         </dependency>
         <dependency>
             <groupId>tribefire.cortex.services</groupId>
-            <artifactId>tribefire-services-integration-tests</artifactId>
+            <artifactId>tribefire-services-integration-test</artifactId>
             <version>${V.tribefire.cortex.services}</version>
         </dependency>
     </dependencies>

@@ -19,7 +19,7 @@ limitations under the License.
         <artifactId>parent</artifactId>
         <version>[3.0,3.1)</version>
     </parent>
-    <artifactId>tribefire-services-integration-tests</artifactId>
+    <artifactId>tribefire-services-integration-test</artifactId>
     <version>3.0.36</version>
     <properties>
     </properties>

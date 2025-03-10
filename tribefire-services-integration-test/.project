@@ -1,5 +1,5 @@
 <projectDescription>
-	<name>tribefire-services-integration-tests - tribefire.cortex.services</name>
+	<name>tribefire-services-integration-test - tribefire.cortex.services</name>
 	<buildSpec>
 		<buildCommand>
 			<name>com.braintribe.devrock.arb.builder.ArtifactReflectionBuilder</name>
