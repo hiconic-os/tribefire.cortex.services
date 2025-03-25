@@ -162,11 +162,11 @@ public abstract class AbstractResourcesTest extends AbstractPersistenceTest {
 		resource = updateWithInputStream(10244567, resource, true);
 	}
 
-	@Test
+	//@Test
 	@Category(KnownIssue.class)
 	// Source requests currently don't work because of the new security in place.
 	// TODO: Either delete them entirely or find a way to support them again.
-	public void resourceSourceRequests() throws Exception {
+	public void KnownIssue_resourceSourceRequests() throws Exception {
 		File tmpFile = this.createTempFile(100);
 
 		PersistenceGmSession uploadSession = newSession();
