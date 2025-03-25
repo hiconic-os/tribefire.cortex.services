@@ -74,14 +74,14 @@ limitations under the License.
             <type>man</type>
             <?tag asset?>
         </dependency>
-        <dependency>
+        <!-- <dependency>
             <groupId>tribefire.cortex.services</groupId>
             <artifactId>tribefire-services-integration-test-module</artifactId>
             <version>${V.tribefire.cortex.services}</version>
             <classifier>asset</classifier>
             <type>man</type>
             <?tag asset?>
-        </dependency>
+        </dependency> -->
         <dependency>
             <groupId>tribefire.cortex</groupId>
             <artifactId>qa-main-module</artifactId>
