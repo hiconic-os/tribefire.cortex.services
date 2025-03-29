@@ -10,5 +10,7 @@ jobs:
     uses: hiconic-os/hiconic.ci.workflows/.github/workflows/range.yaml@main
     secrets: inherit
     with:
+      job-name: 'periodic'
       range: "."
       publish: false
+      run-integration-tests: true
