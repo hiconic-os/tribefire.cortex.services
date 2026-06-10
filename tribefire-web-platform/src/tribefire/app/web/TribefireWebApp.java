@@ -15,11 +15,15 @@
 // ============================================================================
 package tribefire.app.web;
 
+import java.io.File;
+
 import javax.servlet.ServletContextEvent;
 
 import com.braintribe.config.configurator.ClasspathConfigurator;
 import com.braintribe.config.configurator.ConfiguratorContext;
 import com.braintribe.logging.Logger;
+import com.braintribe.logging.level.JulLogLevelFramework;
+import com.braintribe.logging.level.LogLevelSetup;
 import com.braintribe.logging.listener.LoggingRuntimeListener;
 import com.braintribe.model.processing.bootstrapping.TribefireRuntime;
 import com.braintribe.model.processing.tfconstants.TribefireConstants;
@@ -65,9 +69,11 @@ public class TribefireWebApp extends WebApp {
 			LoggingRuntimeListener.register();
 
 			TribefireRuntime.enterStartup();
-
+			
 			runConfigurators(info);
-
+			
+			initializeLogLevels();
+			
 			PreLoader.startStaticPreLoading();
 
 			initializeWireContext(info);
@@ -81,6 +87,16 @@ public class TribefireWebApp extends WebApp {
 			logger.popContext();
 			TribefireRuntime.setProperty(TribefireRuntime.ENVIRONMENT_INITIALIZATION_COMPLETED, "" + System.currentTimeMillis());
 		}
+	}
+
+	private void initializeLogLevels() {
+		LogLevelSetup lls = new LogLevelSetup();
+		lls.setConfDir(new File(TribefireRuntime.getConfigurationDir()));
+		lls.setLogLevelFramework(new JulLogLevelFramework());
+		lls.setPropertyLookup(TribefireRuntime::getProperty);
+		LogLevelSetup.setInstance(lls);
+		
+		lls.applyEffectiveLogLevels();
 	}
 
 	private void triggerIpDetection() {
